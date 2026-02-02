@@ -20,7 +20,7 @@ except:
     pass
 
 # --- 2. HEADER ---
-st.title("🎲 Lore Ipsum")
+st.title("Lore Ipsum")
 st.caption("The Lorem Ipsum for Game Developers.")
 
 # --- 3. SIDEBAR CONTROLS ---
@@ -113,5 +113,6 @@ st.warning(
     """,
     icon="🛑"
 )
+
 
 st.markdown("Made with a lot of ☕ by Ibrahim Samir")
