@@ -1,5 +1,5 @@
 import streamlit as st
-import google.generativeai as genai
+from gemini_model import create_gemini_client, generate_content_with_fallback, get_response_text
 import os
 
 # --- 1. SETUP & CONFIG ---
@@ -54,12 +54,12 @@ with st.sidebar:
         "Personality:",
         options=["Friendly", "Neutral", "Suspicious", "Hostile", "Terrified"]
     )
+    st.caption("Model selection: automatic discovery with fallback.")
 
 # --- 4. THE LOGIC ---
 def generate_lore(genre, archetype, gender, mood, api_key):
     try:
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-flash-lite')
+        client = create_gemini_client(api_key)
         
         prompt = f"""
         You are a Game Design Assistant.
@@ -80,8 +80,8 @@ def generate_lore(genre, archetype, gender, mood, api_key):
         Format the output as clean text, not code blocks, but labeled clearly.
         """
         
-        response = model.generate_content(prompt)
-        return response.text
+        response, model_name = generate_content_with_fallback(client, prompt, api_key)
+        return get_response_text(response), model_name
     except Exception as e:
         return f"Error: {str(e)}"
 
@@ -92,11 +92,12 @@ generate_btn = st.button("🎲 Roll NPC", type="primary", use_container_width=Tr
 
 if generate_btn and api_key:
     with st.spinner("Rolling stats..."):
-        result = generate_lore(genre, archetype, gender, mood, api_key)
+        result, model_name = generate_lore(genre, archetype, gender, mood, api_key)
         
         # Display as Code Block
         st.code(result, language="yaml")
         st.caption("👆 Copy this block and paste it into your Unity/Godot Inspector.")
+        st.caption(f"Model used: {model_name}")
 
 elif generate_btn and not api_key:
     st.error("Missing API Key.")
