@@ -83,7 +83,7 @@ def generate_lore(genre, archetype, gender, mood, api_key):
         response, model_name = generate_content_with_fallback(client, prompt, api_key)
         return get_response_text(response), model_name
     except Exception as e:
-        return f"Error: {str(e)}"
+        return f"Error: {str(e)}", None
 
 # --- 5. MAIN UI ---
 st.markdown(f"### Generate Placeholder: **{mood} {archetype}**")
@@ -95,9 +95,12 @@ if generate_btn and api_key:
         result, model_name = generate_lore(genre, archetype, gender, mood, api_key)
         
         # Display as Code Block
-        st.code(result, language="yaml")
-        st.caption("👆 Copy this block and paste it into your Unity/Godot Inspector.")
-        st.caption(f"Model used: {model_name}")
+        if model_name:
+            st.code(result, language="yaml")
+            st.caption("👆 Copy this block and paste it into your Unity/Godot Inspector.")
+            st.caption(f"Model used: {model_name}")
+        else:
+            st.error(result)
 
 elif generate_btn and not api_key:
     st.error("Missing API Key.")
