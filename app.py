@@ -76,7 +76,11 @@ def card_as_text(card):
 
 
 st.set_page_config(page_title="Lore Ipsum", page_icon="🎲")
-tool_header("Lore Ipsum", "Make placeholder characters, dialogue, and quest hooks for game prototypes.")
+tool_header(
+    "Lore Ipsum",
+    "Make placeholder characters, dialogue, and quest hooks for game prototypes.",
+    "ولّد شخصية للعبة مع خلفية قصيرة وحوار وفكرة لمهمة، ثم نزّل بطاقتها بصيغة JSON أو كنص.",
+)
 
 api_key = configured_key()
 if not api_key:
