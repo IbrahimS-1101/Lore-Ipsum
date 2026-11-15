@@ -1,0 +1,17 @@
+[theme]
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap"
+headingFont = "DM Sans:https://fonts.googleapis.com/css2?family=DM+Sans:wght@400..700&display=swap"
+baseRadius = "medium"
+showWidgetBorder = true
+
+[theme.light]
+primaryColor = "#7C3F13"
+backgroundColor = "#FBF7EF"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#33251F"
+
+[theme.dark]
+primaryColor = "#F5BA88"
+backgroundColor = "#211914"
+secondaryBackgroundColor = "#32251C"
+textColor = "#FCEEDC"
